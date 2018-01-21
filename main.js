@@ -18,16 +18,18 @@ function start() {
 
     let threeSizeShip1 = randomThreeSizeShip();
 
-    function randomRecursion() {
+    let threeSizeShip2 = randomRecursionThree();
+
+    function randomRecursionThree() {
         let xy = randomThreeSizeShip();
         let z = threeSizeShip1;
-        if ((xy.row == z.row) && (xy.column == z.row && xy.column == z.column && xy.column == z.column)) {
-            return randomRecursion()
+        if ((xy.row == z.row) && (xy.column == z.column || xy.column == (z.column-1) || xy.column == (z.column+1))) {
+            return randomRecursionThree()
         }
         return xy
     }
 
-    let threeSizeShip2 = randomRecursion();
+    // let twoSizeShip1 = 
 
     console.log(threeSizeShip1, threeSizeShip2);
 };
