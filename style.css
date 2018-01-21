@@ -1,0 +1,61 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+}
+
+#wrapper {
+    display: flex;
+    height: 100%;
+}
+
+.game {
+    display: flex;
+    align-items: center;
+}
+
+.gamers {
+    padding: 10px;
+    width: 25vw;
+    background: rgba(239, 232, 31, 0.33);
+}
+
+.gamers h1 {
+    text-align: center;
+}
+
+#start {
+    width: 150px;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    left: calc(50% - 75px);
+}
+
+.row {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    margin: 1px 0;
+}
+
+.cell {
+    width: 10%;
+    height: 100%;
+    background: blue;
+    margin: 0 1px;
+    cursor: pointer;
+}
+
+.cell:hover {
+    opacity: .7;
+}
+
+#sea {
+    height: 50vw;
+    width: 50vw;
+    padding: 0 10px;
+}
