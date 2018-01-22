@@ -1,19 +1,11 @@
 document.getElementById('start').addEventListener('click', start);
 
-debugger;
-
-let ship3;
-let ship21;
-let ship22;
-let ship11;
-let ship12;
-let ship13;
 let ships = [];
 
 function hasRow(row) {
     let columns = [];
     for (let ii = 0, ll = ships.length; ii < ll; ii++) {
-        if (ships[ii] && ships[ii].row.indexOf(row[0]*1) != -1) {
+        if (ships[ii] && ships[ii].row.indexOf(row[0] * 1) != -1) {
             columns = columns.concat(ships[ii].column);
         }
     }
@@ -28,7 +20,7 @@ function verify(column, columns) {
 }
 
 function similarity(column, columns) {
-    let match = verify(column[0]*1, columns);
+    let match = verify(column[0] * 1, columns);
     if (match) {
         return true;
     }
@@ -65,7 +57,7 @@ function randomShip1() {
 function hasRowOrRowPlus1(row) {
     let columns = [];
     for (let ii = 0, ll = ships.length; ii < ll; ii++) {
-        if (ships[ii] && (ships[ii].row.indexOf(row[0]*1) != -1 || ships[ii].row.indexOf(row[0]*1 + 1) != -1)) {
+        if (ships[ii] && (ships[ii].row.indexOf(row[0] * 1) != -1 || ships[ii].row.indexOf(row[0] * 1 + 1) != -1)) {
             columns = columns.concat(ships[ii].column);
         }
     }
@@ -99,54 +91,66 @@ function recursionShip1() {
 }
 
 function start() {
+
+    ships = [];
+    let ship3;
+    let ship21;
+    let ship22;
+    let ship11;
+    let ship12;
+    let ship13;
+
     let myPromis = new Promise((resolve, reject) => {
         resolve();
     });
     myPromis.then(() => {
-        ship3 = randomShip3();
-        ship3.column.push(ship3.column[0] * 1 - 1, ship3.column[0] * 1 + 1);
-        return ship3;
-    })
-    .then((ship) => {
-        ships.push(ship);
-        ship21 = recursionShip2();
-        ship21.row.push(ship21.row[0] * 1 + 1);
-        return ship21;
-    })
-    .then((ship) => {
-        ships.push(ship);
-        ship22 = recursionShip2();
-        ship22.row.push(ship22.row[0] * 1 + 1);
-        return ship22;
-    })
-    .then((ship) => {
-        ships.push(ship);
-        ship11 = recursionShip1();
-        return ship11;
-    })
-    .then((ship) => {
-        ships.push(ship);
-        ship12 = recursionShip1();
-        return ship12;
-    })
-    .then((ship) => {
-        ships.push(ship);
-        ship13 = recursionShip1();
-        return ship13
-    })
-    .then((ship) => {
-        ships.push(ship);
-        addingListener();
-    })
+            ship3 = randomShip3();
+            ship3.column.push(ship3.column[0] * 1 - 1, ship3.column[0] * 1 + 1);
+            return ship3;
+        })
+        .then((ship) => {
+            ships.push(ship);
+            ship21 = recursionShip2();
+            ship21.row.push(ship21.row[0] * 1 + 1);
+            return ship21;
+        })
+        .then((ship) => {
+            ships.push(ship);
+            ship22 = recursionShip2();
+            ship22.row.push(ship22.row[0] * 1 + 1);
+            return ship22;
+        })
+        .then((ship) => {
+            ships.push(ship);
+            ship11 = recursionShip1();
+            return ship11;
+        })
+        .then((ship) => {
+            ships.push(ship);
+            ship12 = recursionShip1();
+            return ship12;
+        })
+        .then((ship) => {
+            ships.push(ship);
+            ship13 = recursionShip1();
+            return ship13
+        })
+        .then((ship) => {
+            ships.push(ship);
+            addingListener();
+        })
 };
 
 function addingListener() {
+    let counter = 0;
+    let clicked = 0;
     let cells = document.getElementById('sea').getElementsByClassName('cell');
     for (let ii = 0, ll = cells.length; ii < ll; ii++) {
         cells[ii].addEventListener('click', gameCounter);
     }
 
     function removingListener(tt, color) {
+        clicked += 1;
         tt.style.background = color;
         tt.removeEventListener('click', gameCounter);
     }
@@ -163,6 +167,16 @@ function addingListener() {
         if (!match) {
             return removingListener(tt, 'gray');
         }
-        return removingListener(tt, 'red');
+        counter += 1;
+        if (counter == 10) {
+            let click = clicked + 1;
+            gameOver(click);
+        }
+        removingListener(tt, 'red');
+
+    }
+
+    function gameOver(clicked) {
+        alert(clicked);
     }
 }
