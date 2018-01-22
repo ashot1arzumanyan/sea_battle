@@ -57,5 +57,7 @@ body {
 #sea {
     height: 50vw;
     width: 50vw;
+    max-width: 699px;
+    max-height: 699px;
     padding: 0 10px;
 }
