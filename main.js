@@ -1,6 +1,6 @@
-document.getElementById('start').addEventListener('click', start);
-
 let ships = [];
+
+start(1);
 
 function hasRow(row) {
     let columns = [];
@@ -37,20 +37,20 @@ function randomRowOrColumn(doing, multiply, plus) {
 }
 
 function randomShip3() {
-    let row = randomRowOrColumn('floor', 10, 0);
-    let column = randomRowOrColumn('round', 7, 1);
+    let row = Math.floor(Math.random() * 10);
+    let column = Math.round(Math.random() * 7 + 1);
     return new ShipsLocation(row, column);
 }
 
 function randomShip2() {
-    let row = randomRowOrColumn('floor', 9, 0);
-    let column = randomRowOrColumn('floor', 10, 0)
+    let row = Math.floor(Math.random() * 9);
+    let column = Math.floor(Math.random() * 10);
     return new ShipsLocation(row, column);
 }
 
 function randomShip1() {
-    let row = randomRowOrColumn('floor', 10, 0);
-    let column = randomRowOrColumn('floor', 10, 0)
+    let row = Math.floor(Math.random() * 10);
+    let column = Math.floor(Math.random() * 10);
     return new ShipsLocation(row, column);
 }
 
@@ -90,7 +90,7 @@ function recursionShip1() {
     return recursionShip1();
 }
 
-function start() {
+function start(gamerCount, firstClicked) {
 
     ships = [];
     let ship3;
@@ -137,11 +137,11 @@ function start() {
         })
         .then((ship) => {
             ships.push(ship);
-            addingListener();
-        })
+            addingListener(gamerCount, firstClicked);
+        });
 };
 
-function addingListener() {
+function addingListener(gamerCount, firstClicked) {
     let counter = 0;
     let clicked = 0;
     let cells = document.getElementById('sea').getElementsByClassName('cell');
@@ -170,13 +170,50 @@ function addingListener() {
         counter += 1;
         if (counter == 10) {
             let click = clicked + 1;
-            gameOver(click);
+            gameOver(click, gamerCount, firstClicked);
         }
         removingListener(tt, 'red');
 
     }
 
-    function gameOver(clicked) {
-        alert(clicked);
+    function gameOver(clicked, gamerCount, firstClicked) {
+        let firstGamer = document.querySelector('.gamer_one');
+        let lastGamer = document.querySelector('.gamer_two');
+        if (gamerCount == 1) {
+            firstGamer.style.opacity = '0.5';
+            firstGamer.lastElementChild.innerText = 'Clicked: ' + clicked;
+            lastGamer.style.opacity = '1';
+            setTimeout(() => {
+                let cells = document.getElementById('sea').getElementsByClassName('cell');
+                for (let ii = 0, ll = cells.length; ii < ll; ii++) {
+                    cells[ii].style.background = 'blue';
+                }
+                start(2, clicked);   
+            }, 3333);
+        } else {
+            lastGamer.lastElementChild.innerText = 'Clicked: ' + clicked;
+            firstGamer.style.opacity = '1';
+
+            function changeBgColor(firstGamerColor, lastGamerColor) {
+                firstGamer.style.background = firstGamerColor;
+                lastGamer.style.background = lastGamerColor;
+            }
+
+            if (firstClicked >= clicked) {
+                if (firstClicked == clicked) {
+                    changeBgColor('yellow', 'yellow');
+                } else {
+                    changeBgColor('red', 'green');
+                }
+            } else {
+                changeBgColor('green', 'red');
+            }
+            let startNewGame = document.getElementById('startNewGame');
+            startNewGame.innerText = 'Start new game';
+            startNewGame.style.visibility = 'visible';
+            startNewGame.onclick = () => {
+                window.location.reload();
+            }
+        }
     }
 }

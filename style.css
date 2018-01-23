@@ -17,20 +17,29 @@ body {
     align-items: center;
 }
 
+.gamer_one {
+    background: rgba(239, 232, 31, 0.66);
+}
+
+.gamer_two {
+    opacity: .5;
+}
+
 .gamers {
     padding: 10px;
     width: 25vw;
-    background: rgba(239, 232, 31, 0.33);
+    background: rgba(239, 232, 31, 0.66);
 }
 
-.gamers h1 {
+.gamers > * {
     text-align: center;
 }
 
-#start {
+#startNewGame {
     width: 150px;
     padding: 5px;
     position: absolute;
+    visibility: hidden;
     top: 10px;
     left: calc(50% - 75px);
 }
