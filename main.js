@@ -181,7 +181,7 @@ function addingListener(gamerCount, firstClicked) {
         let lastGamer = document.querySelector('.gamer_two');
         if (gamerCount == 1) {
             firstGamer.style.opacity = '0.5';
-            firstGamer.lastElementChild.innerText = 'Clicked: ' + clicked;
+            document.getElementById('score_one').innerText = 'Clicked: ' + clicked;
             lastGamer.style.opacity = '1';
             setTimeout(() => {
                 let cells = document.getElementById('sea').getElementsByClassName('cell');
@@ -191,7 +191,7 @@ function addingListener(gamerCount, firstClicked) {
                 start(2, clicked);   
             }, 3333);
         } else {
-            lastGamer.lastElementChild.innerText = 'Clicked: ' + clicked;
+            document.getElementById('score_two').innerText = 'Clicked: ' + clicked;
             firstGamer.style.opacity = '1';
 
             function changeBgColor(firstGamerColor, lastGamerColor) {
@@ -208,6 +208,7 @@ function addingListener(gamerCount, firstClicked) {
             } else {
                 changeBgColor('green', 'red');
             }
+            
             let startNewGame = document.getElementById('startNewGame');
             startNewGame.innerText = 'Start new game';
             startNewGame.style.visibility = 'visible';
